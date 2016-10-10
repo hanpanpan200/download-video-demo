@@ -7,6 +7,7 @@ import {
   ScrollView,
   Linking,
   TouchableOpacity,
+  WebView,
 } from 'react-native'
 import YouTube from 'react-native-youtube'
 
@@ -16,6 +17,7 @@ export default class App extends Component {
     this.state = {
       pdfUrl: 'http://192.168.2.105:8080/1.pdf',
       videoId: 'KVZ-P-ZI6W4',
+      videoUrl: 'https://www.youtube.com/embed/IxzPhx1cLQA?autoplay=0',
       status: null,
       quality: null,
       error: null,
@@ -43,6 +45,9 @@ export default class App extends Component {
             <Text style={styles.buttonText}>Open PDF in browser</Text>
           </View>
         </TouchableOpacity>
+        <Text style={styles.welcome}>
+          Show video via react-native-youtube
+        </Text>
         <View style={styles.videoContainer}>
           <YouTube
             ref="youtubePlayer"
@@ -60,6 +65,13 @@ export default class App extends Component {
             style={styles.videoPreview}
           />
         </View>
+        <Text style={styles.welcome}>
+          Show video via WebView
+        </Text>
+        <WebView
+          source={{uri: this.state.videoUrl}}
+          style={styles.videoPreview}
+        />
       </ScrollView>
     );
   }
