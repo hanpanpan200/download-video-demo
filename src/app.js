@@ -9,12 +9,13 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import YouTube from 'react-native-youtube'
+
 export default class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
       pdfUrl: 'http://192.168.2.105:8080/1.pdf',
-      videoUrl: 'https://www.youtube.com/watch?v=IxzPhx1cLQA',
+      videoId: 'KVZ-P-ZI6W4',
       status: null,
       quality: null,
       error: null,
@@ -45,8 +46,8 @@ export default class App extends Component {
         <View style={styles.videoContainer}>
           <YouTube
             ref="youtubePlayer"
-            videoId="KVZ-P-ZI6W4" // The YouTube video ID
-            play={true}           // control playback of video with true/false
+            videoId={this.state.videoId} // The YouTube video ID
+            play={false}           // control playback of video with true/false
             hidden={false}        // control visiblity of the entire view
             playsInline={true}    // control whether the video should play inline
             loop={false}          // control whether the video should loop when ended
@@ -54,14 +55,9 @@ export default class App extends Component {
             onReady={(e)=>{this.setState({isReady: true})}}
             onChangeState={(e)=>{this.setState({status: e.state})}}
             onChangeQuality={(e)=>{this.setState({quality: e.quality})}}
-            onError={(e)=>
-              {
-                console.log('error>>>', e)
-                this.setState({error: e.error})
-              }
-            }
+            onError={(e)=> {this.setState({error: e.error})}}
             onProgress={(e)=>{this.setState({currentTime: e.currentTime, duration: e.duration})}}
-            style={{alignSelf: 'stretch', height: 300, backgroundColor: 'black', marginVertical: 10}}
+            style={styles.videoPreview}
           />
         </View>
       </ScrollView>
@@ -97,7 +93,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   videoPreview: {
-    width: 300,
+    alignSelf: 'stretch',
     height: 300,
+    backgroundColor: 'black',
+    marginVertical: 10,
   }
 });
